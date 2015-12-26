@@ -95,7 +95,7 @@ class Shortcode {
 			return ! is_null ( $o );
 		} );
 		
-		return first ( $occurrences );
+		return $occurrences[0];
 	}
 	
 	public function findAll ($shortcode_name) {
