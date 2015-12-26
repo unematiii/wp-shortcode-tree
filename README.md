@@ -4,7 +4,7 @@ Parses (nested) shortcodes into tree hierarcy. Find nodes, manipulate and re-ser
 
 ### Basic Usage
 
-Consider a nested shortcode:
+Consider a WordPress post with the following content:
 
 ```
 [folder name="SampleFolder"]
@@ -15,4 +15,30 @@ Consider a nested shortcode:
     [document type="image/png" size="64000" path="/path/to/image.png" name="File 4"]
   [/folder]
 [/folder]
+```
+
+Parse:
+
+```php
+	$content = ShortcodeTree::fromString ( $page->post_content );
+	$folder = $content->getRoot ();
+```
+
+Get all documents & modify:
+
+```php
+	$documents = $folder->findAll('document');
+	
+	// Prepend 'My ' to filename
+	foreach($documents as $doc)
+	  $doc->attr('name', 'My ' . $doc->attr('name'));
+```
+
+Serialize and save:
+```php
+  // Write content
+	wp_update_post ( array (
+			'ID' => $post_id,
+			'post_content' => $content 
+	) );
 ```
