@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordpress;
+namespace WordPress;
 
 class Shortcode {
 	protected $name;
@@ -73,7 +73,7 @@ class Shortcode {
 	 * @param string $shortcode_name
 	 * @param number $index
 	 * @param number $c
-	 * @return \Wordpress\ShortCode|NULL
+	 * @return \WordPress\ShortCode|NULL
 	 */
 	public function findNthOccurrence($shortcode_name, $index, &$c = 0) {
 		$index = (int) $index;
@@ -206,7 +206,7 @@ class ShortcodeTree {
 	/**
 	 * 
 	 * @param string $shortcode
-	 * @return \Wordpress\ShortCodeTree
+	 * @return \WordPress\ShortCodeTree
 	 */
 	public static function fromString($shortcode) {
 		$tree = new ShortcodeTree ();
