@@ -1,4 +1,4 @@
-## Wordpress Shortcode Tree
+## WordPress Shortcode Tree
 
 Parses (nested) shortcodes into tree hierarcy. Find nodes, manipulate and re-serialize into string. Convenient for processing VisualComposer generated content in the backend.
 
@@ -20,7 +20,7 @@ Consider a WordPress post with the following content:
 Parse:
 
 ```php
-$content = ShortcodeTree::fromString ( $page->post_content );
+$content = \WordPress\ShortcodeTree::fromString ( $page->post_content );
 $folder = $content->getRoot ();
 ```
 
