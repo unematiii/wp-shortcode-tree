@@ -220,7 +220,7 @@ class ShortcodeTree {
 				
 				$tree->setRoot ( $root );
 			} else {
-				$tree->setRoot ( first ( $nodes ) );
+				$tree->setRoot ( $nodes[0] );
 			}
 		}
 		
