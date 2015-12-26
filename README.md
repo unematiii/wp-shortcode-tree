@@ -20,25 +20,25 @@ Consider a WordPress post with the following content:
 Parse:
 
 ```php
-	$content = ShortcodeTree::fromString ( $page->post_content );
-	$folder = $content->getRoot ();
+$content = ShortcodeTree::fromString ( $page->post_content );
+$folder = $content->getRoot ();
 ```
 
 Get all documents & modify:
 
 ```php
-	$documents = $folder->findAll('document');
-	
-	// Prepend 'My ' to filename
-	foreach($documents as $doc)
-	  $doc->attr('name', 'My ' . $doc->attr('name'));
+$documents = $folder->findAll('document');
+
+// Prepend 'My ' to filename
+foreach($documents as $doc)
+	$doc->attr('name', 'My ' . $doc->attr('name'));
 ```
 
 Serialize and save:
 ```php
-  // Write content
-	wp_update_post ( array (
-			'ID' => $post_id,
-			'post_content' => $content 
-	) );
+// Write content
+wp_update_post ( array (
+	'ID' => $post_id,
+	'post_content' => $content 
+) );
 ```
