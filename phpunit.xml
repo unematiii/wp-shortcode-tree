@@ -15,7 +15,9 @@
     <include>
       <directory suffix=".php">./src</directory>
     </include>
-    <exclude/>
+    <exclude>
+      <file>./src/bootstrap.php</file>
+    </exclude>
     <report>
       <html outputDirectory="tests/logs/coverage"></html>
     </report>
