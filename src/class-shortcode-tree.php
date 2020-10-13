@@ -8,6 +8,7 @@ class Shortcode {
 	protected $content;
 	protected $parent;
 	protected $shortcodes = array ();
+	protected $closed = false;
 	
 	public function __construct($name = '', $atts = array(), $content = '', $shortcodes = array(), $parent = null) {
 		$this->name = $name;
@@ -37,6 +38,14 @@ class Shortcode {
 	
 	public function &atts() {
 		return $this->atts;
+	}
+
+	public function getClosed() {
+		return $this->closed;
+	}
+
+	public function setClosed($state = true) {
+		$this->closed = $state;
 	}
 	
 	public function getContent() {
@@ -141,6 +150,12 @@ class Shortcode {
 					
 					foreach ( $siblings as $sibling )
 						$node->add_shortcode ( $sibling );
+
+					if (0 === count($node->shortcodes)) {
+						if (preg_match("~\[/" . $name . "\]\s*$~", $matches[0][$node_index])) {
+							$node->setClosed(true);
+						}
+					}
 						
 					// Processed
 					array_push ( $nodes, $node );
@@ -154,6 +169,7 @@ class Shortcode {
 	public function __toString() {
 		$is_tag = ( bool ) strlen( trim ( $this->name ) );
 		$is_nested = ( bool ) count ( $this->shortcodes );
+		$needs_closing_tag = $this->getClosed();
 		$has_content = ( bool ) strlen ( $this->content );
 		
 		$out = '';
@@ -184,10 +200,15 @@ class Shortcode {
 				$out .= $this->content;
 			}
 			
-			if ($is_tag)
-				$out .= '[/' . $this->name . ']';
+			if ($is_tag || $is_closed) {
+				$needs_closing_tag = true;
+			}
 		}
-		
+
+		if ($needs_closing_tag) {
+			$out .= '[/' . $this->name . ']';
+		}
+
 		return $out;
 	}
 }
