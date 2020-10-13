@@ -33,4 +33,28 @@ class ShortcodeTreeTest extends \PHPUnit\Framework\TestCase
         
         $this->assertEquals($expected_content, $content);
     }
+
+    public function test_immediatelyClosedEmptyTagsShouldWork() {
+        add_shortcode('av_tab_section', null);
+        add_shortcode('av_tab_sub_section', null);
+        add_shortcode('custom_sc', null);
+
+        $post_content = "[av_tab_section][av_tab_sub_section][custom_sc foo='bar'][/custom_sc][custom_sc][/custom_sc][/av_tab_sub_section][av_tab_section]";
+        $expected_content = '[av_tab_section][av_tab_sub_section][custom_sc foo="bar"][/custom_sc][custom_sc][/custom_sc][/av_tab_sub_section][av_tab_section]';
+
+        $content = ShortcodeTree::fromString ( $post_content );
+
+        $this->assertEquals($expected_content, (string)$content);   
+    }
+
+    public function test_keyOnlyAttributesShouldWork() {
+        add_shortcode('av_one_third', null);
+
+        $post_content = "[av_one_third first min_height='']";
+        $expected_content = '[av_one_third first min_height=""]';
+
+        $content = ShortcodeTree::fromString ( $post_content );
+
+        $this->assertEquals($expected_content, (string)$content);   
+    }
 }
