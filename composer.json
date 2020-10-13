@@ -1,0 +1,22 @@
+{
+    "name": "unematiii/wp-shortcode-tree",
+    "description": "Parses (nested) shortcodes into tree hierarcy. Find nodes, manipulate and re-serialize into string. Convenient for processing VisualComposer generated content in the backend.",
+    "type": "library",
+    "require": {
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mati Kaerner",
+            "email": "mati.karner@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.4"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PluginTests\\": "tests/"
+        }
+    }
+}
