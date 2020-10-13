@@ -132,7 +132,7 @@ class Shortcode {
 					// Siblings
 					$siblings = array ();
 					if (strlen ( $matches [5] [$node_index] )) {
-						if(0 === strpos( $matches [5] [$node_index], '[' ))
+						if(0 === strpos( trim( $matches [5] [$node_index] ), '[' ))
 							$siblings = Shortcode::fromString ( $matches [5] [$node_index] );
 						else
 							$node->setContent($matches [5] [$node_index]);
