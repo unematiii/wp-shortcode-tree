@@ -69,6 +69,7 @@ class Shortcode {
 	}
 	
 	/**
+	 * Find the n-th occurence of the shortcode in the tree, where n (= $index) is zero-based
 	 * 
 	 * @param string $shortcode_name
 	 * @param number $index
