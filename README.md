@@ -39,6 +39,8 @@ Serialize and save:
 // Write content
 wp_update_post ( array (
 	'ID' => $post_id,
-	'post_content' => $content 
+	'post_content' => $content // $content is automatically serialized
+	                           // from ShortcodeTree to a string when
+	                           // __toString() is called automagically
 ) );
 ```
