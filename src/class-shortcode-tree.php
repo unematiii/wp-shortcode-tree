@@ -195,7 +195,7 @@ class Shortcode {
 				$out .= $this->content;
 			}
 			
-			if ($is_tag || $is_closed) {
+			if ($is_tag) {
 				$needs_closing_tag = true;
 			}
 		}
