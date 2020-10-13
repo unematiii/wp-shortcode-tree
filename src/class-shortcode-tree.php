@@ -14,7 +14,7 @@ class Shortcode {
 		$this->name = $name;
 		$this->atts = $atts;
 		$this->content = $content;
-		$this->shortcodes = array ();
+		$this->shortcodes = $shortcodes;
 		
 		$this->parent = $parent;
 	}
