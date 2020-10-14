@@ -1,8 +1,8 @@
 <?php
 require_once(__DIR__ . '/../vendor/autoload.php');
-require_once(__DIR__ . '/class-shortcode-tree.php');
+require_once(__DIR__ . '/../src/class-shortcode-tree.php');
 
-$testsSrc = __DIR__ . '/../tests/src';
+$testsSrc = __DIR__ . '/src';
 if (!is_dir($testsSrc)) {
     mkdir($testsSrc);
 }
