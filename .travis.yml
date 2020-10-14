@@ -1,0 +1,39 @@
+language: php
+
+# test against latest and oldest supported versions of PHP
+# in conjunction with different WP core versions
+#
+# Reference: https://www.php.net/supported-versions.php
+#
+# Customize the build matrix.
+matrix:
+  fast_finish: true
+  include:
+    - name: Latest stable
+      php: 7.4
+      env: WP_CORE_VERSION=latest
+
+    - name: Legacy
+      php: 7.2
+      env: WP_CORE_VERSION=4.9
+
+    # Nightly versions of PHP and WordPress.
+    - name: Bleeding edge
+      php: nightly
+      env: WP_CORE_VERSION=master
+  allow_failures:
+    - php: nightly
+
+before_install:
+- composer remove --dev phpunit/phpunit
+- composer require php-coveralls/php-coveralls
+
+install:
+  - composer install
+
+script:
+- mkdir -p ./tests/logs
+- phpunit --coverage-clover ./tests/logs/clover.xml
+
+after_success:
+- php ./vendor/bin/php-coveralls -v
