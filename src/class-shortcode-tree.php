@@ -14,7 +14,7 @@ class Shortcode {
 		$this->name = $name;
 		$this->atts = $atts;
 		$this->content = $content;
-		$this->shortcodes = array ();
+		$this->shortcodes = $shortcodes;
 		
 		$this->parent = $parent;
 	}
@@ -105,7 +105,7 @@ class Shortcode {
 			return ! is_null ( $o );
 		} );
 		
-		return $occurrences[0];
+		return reset( $occurrences ) ?: null;
 	}
 	
 	public function findAll ($shortcode_name) {
