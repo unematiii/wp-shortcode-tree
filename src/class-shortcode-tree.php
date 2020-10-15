@@ -180,6 +180,11 @@ class Shortcode {
 		
 		if (count ( $this->atts ))
 			$out .= ' ' . implode ( ' ', array_map ( function ($key) use($atts) {
+				$value = $atts[$key];
+				if (is_int( $key )) {
+					return $value;
+				} 
+
 				return $key . '="' . $atts [$key] . '"';
 			}, array_keys ( $this->atts ) ) );
 		
