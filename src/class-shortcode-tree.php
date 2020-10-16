@@ -1,6 +1,6 @@
 <?php
 /**
- * Implementation of ShortCode and ShortcodeTree classes
+ * Implementation of Shortcode and ShortcodeTree classes
  *
  * @package WordPress
  */
@@ -181,7 +181,7 @@ class Shortcode {
 	 * @param \WordPress\ShortCode $shortcode Shortcode.
 	 * @return void
 	 */
-	public function add_shortcode($shortcode) {
+	public function addShortcode($shortcode) {
 		if ($shortcode instanceof Shortcode) {
 			$shortcode->setParent( $this );
 			array_push( $this->shortcodes, $shortcode );
@@ -293,7 +293,7 @@ class Shortcode {
 					}
 
 					foreach ( $siblings as $sibling ) {
-						$node->add_shortcode( $sibling );
+						$node->addShortcode( $sibling );
 					}
 
 					if (0 === count( $node->shortcodes )) {
@@ -436,7 +436,7 @@ class ShortcodeTree {
 			if (count( $nodes ) > 1) {
 				$root = new Shortcode();
 				foreach ( $nodes as $node ) {
-					$root->add_shortcode( $node );
+					$root->addShortcode( $node );
 				}
 
 				$tree->setRoot( $root );
