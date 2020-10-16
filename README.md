@@ -1,5 +1,8 @@
 ## WordPress Shortcode Tree
 
+[![Build Status](https://travis-ci.org/unematiii/wp-shortcode-tree.svg)](https://travis-ci.org/unematiii/wp-shortcode-tree)
+[![Coverage Status](https://coveralls.io/repos/github/unematiii/wp-shortcode-tree/badge.svg)](https://coveralls.io/github/unematiii/wp-shortcode-tree)
+
 Parses (nested) shortcodes into tree hierarcy. Find nodes, manipulate and re-serialize into string. Convenient for processing VisualComposer generated content in the backend.
 
 ### Basic Usage
