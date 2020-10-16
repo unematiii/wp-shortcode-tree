@@ -92,7 +92,7 @@ class Shortcode {
 
 	/**
 	 * Gets/sets attribute value:
-	 *  if $value is not provided, return attribute value
+	 *  if $value is not provided, returns attributes value
 	 *  if $value is provided, sets attributes value
 	 *
 	 * @param string $name Attribute name.
@@ -155,7 +155,7 @@ class Shortcode {
 	}
 
 	/**
-	 * Gets shortcode parent. Returns NULL if this short is root node.
+	 * Gets shortcode parent. Returns NULL if this short has no root node.
 	 *
 	 * @return \WordPress\ShortCode|NULL
 	 */
@@ -176,7 +176,7 @@ class Shortcode {
 	}
 
 	/**
-	 * Adds another shortcode as a sibling
+	 * Adds another shortcode as a sibling and marks itself as a root of that shortcode
 	 *
 	 * @param \WordPress\ShortCode $shortcode Shortcode.
 	 * @return void
@@ -202,7 +202,7 @@ class Shortcode {
 	 *
 	 * @param string $shortcode_name Shortcode name.
 	 * @param number $index n-th occurrence (zero-based).
-	 * @param number $c Counter for determining occurrences found so far.
+	 * @param number $c Optional. Counter for determining occurrences found so far.
 	 * @return \WordPress\ShortCode|NULL
 	 */
 	public function findNthOccurrence($shortcode_name, $index, &$c = 0) {
@@ -378,19 +378,43 @@ class Shortcode {
 	}
 }
 
+/**
+ * Represents a single rooted shortcode tree
+ */
 class ShortcodeTree {
+	/**
+	 * Root node of the tree
+	 *
+	 * @var \WordPress\ShortCode|NULL
+	 */
 	protected $root;
 
+	/**
+	 * Constructs new \WordPress\ShortcodeTree
+	 *
+	 * @param \WordPress\ShortCode|NULL $root Root node.
+	 */
 	public function __construct($root = null) {
 		if ( ! is_null( $root )) {
 			$this->setRoot( $root );
 		}
 	}
 
+	/**
+	 * Gets the root node of the tree
+	 *
+	 * @return \WordPress\ShortCode|NULL
+	 */
 	public function getRoot() {
 		return $this->root;
 	}
 
+	/**
+	 * Sets the root node of the tree
+	 *
+	 * @param \WordPress\ShortCode $root Root node.
+	 * @return void
+	 */
 	public function setRoot($root) {
 		if ($root instanceof Shortcode) {
 			$this->root = $root;
@@ -398,7 +422,8 @@ class ShortcodeTree {
 	}
 
 	/**
-	 * Constructs ShortCodeTree from string
+	 * Constructs ShortCodeTree from string.
+	 * For non single rooted hierarchy, a dummy parent node is constructed.
 	 *
 	 * @param string $shortcode Shortcode(s) to parse.
 	 * @return \WordPress\ShortCodeTree
@@ -423,6 +448,11 @@ class ShortcodeTree {
 		return $tree;
 	}
 
+	/**
+	 * Serializes shortcode tree into string
+	 *
+	 * @return string
+	 */
 	public function __toString() {
 		return (string) $this->root;
 	}
