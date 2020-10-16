@@ -1,15 +1,67 @@
 <?php
+/**
+ * Implementation of ShortCode and ShortcodeTree classes
+ *
+ * @package WordPress
+ */
 
 namespace WordPress;
 
+/**
+ * Represents a single shortcode together with its attributes and siblings
+ */
 class Shortcode {
+	/**
+	 * Shortcode (tag) name
+	 *
+	 * @var string
+	 */
 	protected $name;
-	protected $atts;
-	protected $content;
-	protected $parent;
-	protected $shortcodes = array();
-	protected $closed     = false;
 
+	/**
+	 * Shortcode attributes (associative array of key/value pairs)
+	 *
+	 * @var array
+	 */
+	protected $atts;
+
+	/**
+	 * Shortcode content
+	 *
+	 * @var string
+	 */
+	protected $content;
+
+	/**
+	 * Parent node of this shortcode. Null, if shortcode has no parent
+	 *
+	 * @var \WordPress\ShortCode|NULL
+	 */
+	protected $parent;
+
+	/**
+	 * Array of siblings as instances of \WordPress\ShortCode
+	 *
+	 * @var array
+	 */
+	protected $shortcodes = array();
+
+	/**
+	 * Determines if shortcode has a closing tag
+	 *
+	 * @var boolean
+	 */
+	protected $closed = false;
+
+	/**
+	 * Construct new ShortCode
+	 *
+	 * @param string                    $name Shortcode name.
+	 * @param array                     $atts Shortcode attributes (associative array of key/value pairs).
+	 * @param string                    $content Content of shortcode (text).
+	 * @param array                     $shortcodes Array of siblings as instances of \WordPress\ShortCode.
+	 * @param \WordPress\ShortCode|NULL $parent Parent node of this shortcode. Null, if shortcode has no parent.
+	 */
 	public function __construct($name = '', $atts = array(), $content = '', $shortcodes = array(), $parent = null) {
 		$this->name       = $name;
 		$this->atts       = $atts;
@@ -19,54 +71,116 @@ class Shortcode {
 		$this->parent = $parent;
 	}
 
+	/**
+	 * Gets shortcode name
+	 *
+	 * @return string
+	 */
 	public function getName() {
 		return $this->name;
 	}
 
+	/**
+	 * Sets shortcode name
+	 *
+	 * @param string $name Shortcode name.
+	 * @return void
+	 */
 	public function setName($name) {
 		$this->name = $name;
 	}
 
+	/**
+	 * Gets/sets attribute value:
+	 *  if $value is not provided, return attribute value
+	 *  if $value is provided, sets attributes value
+	 *
+	 * @param string $name Attribute name.
+	 * @param string $value Attribute value.
+	 * @return void|string
+	 */
 	public function attr($name = null, $value = null) {
-		if (isset( $this->atts [ $name ] )) {
-			if (is_null( $value )) {
-				return $this->atts [ $name ];
-			} else {
-				$this->atts [ $name ] = $value;
-			}
+		if (isset( $this->atts [ $name ] ) && is_null( $value )) {
+			return $this->atts [ $name ];
+		} else {
+			$this->atts [ $name ] = $value;
 		}
 	}
 
+	/**
+	 * Returns associative array of shortcode attributes as a reference
+	 *
+	 * @return array
+	 */
 	public function &atts() {
 		return $this->atts;
 	}
 
+	/**
+	 * Returns true if shortcode has a closing tag, false otherwise
+	 *
+	 * @return boolean
+	 */
 	public function getClosed() {
 		return $this->closed;
 	}
 
+	/**
+	 * Marks shortcode as closing or self-closing
+	 *
+	 * @param boolean $state If true, shortcode will be serialized with closing tag.
+	 * @return void
+	 */
 	public function setClosed($state = true) {
 		$this->closed = $state;
 	}
 
+	/**
+	 * Gets shortcode content
+	 *
+	 * @return string
+	 */
 	public function getContent() {
 		return $this->content;
 	}
 
+	/**
+	 * Sets shortcode content
+	 *
+	 * @param string $content Text content.
+	 * @return void
+	 */
 	public function setContent($content) {
 		$this->content = $content;
 	}
 
+	/**
+	 * Gets shortcode parent. Returns NULL if this short is root node.
+	 *
+	 * @return \WordPress\ShortCode|NULL
+	 */
 	public function getParent() {
 		return $this->parent;
 	}
 
+	/**
+	 * Sets shortcode parent
+	 *
+	 * @param \WordPress\ShortCode $parent Parent node.
+	 * @return void
+	 */
 	public function setParent($parent) {
 		if ($parent instanceof Shortcode) {
 			$this->parent = $parent;
 		}
 	}
 
+	/**
+	 * Adds another shortcode as a sibling
+	 *
+	 * @param \WordPress\ShortCode $shortcode Shortcode.
+	 * @return void
+	 */
 	public function add_shortcode($shortcode) {
 		if ($shortcode instanceof Shortcode) {
 			$shortcode->setParent( $this );
@@ -74,6 +188,11 @@ class Shortcode {
 		}
 	}
 
+	/**
+	 * Returns array of shortcodes as a reference
+	 *
+	 * @return array
+	 */
 	public function &shortcodes() {
 		return $this->shortcodes;
 	}
@@ -112,10 +231,17 @@ class Shortcode {
 				return ! is_null( $o );
 			}
 		);
+		$occurrence  = reset( $occurrences );
 
-		return reset( $occurrences ) ?: null;
+		return $occurrence ? $occurrence : null;
 	}
 
+	/**
+	 * Traverses child nodes recursively and finds all shortcodes that match specified name
+	 *
+	 * @param string $shortcode_name Name to look up shortcodes by.
+	 * @return array
+	 */
 	public function findAll ($shortcode_name) {
 		$result = array();
 		if ($shortcode_name === $this->name) {
@@ -131,6 +257,13 @@ class Shortcode {
 		return $result;
 	}
 
+	/**
+	 * Parses string of shortcodes into array of \Wordpress\ShortCode.
+	 * For single rooted hierarchy, array only contains one root node.
+	 *
+	 * @param string $shortcode Input string to parse.
+	 * @return array
+	 */
 	public static function fromString($shortcode) {
 		$pattern = get_shortcode_regex();
 		$nodes   = array();
@@ -178,6 +311,11 @@ class Shortcode {
 		return $nodes;
 	}
 
+	/**
+	 * Serializes shortcode into string
+	 *
+	 * @return string
+	 */
 	public function __toString() {
 		$is_tag            = (bool) strlen( trim( $this->name ) );
 		$is_nested         = (bool) count( $this->shortcodes );

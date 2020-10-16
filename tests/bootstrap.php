@@ -7,7 +7,7 @@ if ( ! is_dir( $testsSrc )) {
 	mkdir( $testsSrc );
 }
 
-$wpVersion = getenv( 'WP_CORE_VERSION' ) ?: 'latest';
+$wpVersion = getenv( 'WP_CORE_VERSION' ) ? getenv( 'WP_CORE_VERSION' ) : 'latest';
 
 if ('latest' === $wpVersion) {
 	$updateData = json_decode( file_get_contents( 'https://api.wordpress.org/core/version-check/1.7/' ) );
