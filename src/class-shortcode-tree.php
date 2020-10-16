@@ -152,7 +152,7 @@ class Shortcode {
 						$node->add_shortcode ( $sibling );
 
 					if (0 === count($node->shortcodes)) {
-						if (preg_match("~\[/" . $name . "\]\s*$~", $matches[0][$node_index])) {
+						if (preg_match("~\[/" . $name . "\]\s*$~", trim( $matches[0][$node_index] ))) {
 							$node->setClosed(true);
 						}
 					}
