@@ -1,0 +1,7 @@
+{
+    "phpcs.enable": true,
+    "phpcs.standard": "./phpcs.xml",
+    "phpcs.executablePath": "./vendor/bin/phpcs",
+    "phpcs.showWarnings": true,
+    "phpcs.composerJsonPath": "composer.json"
+}

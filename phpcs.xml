@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WordPress Shortcode Tree" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+    <description>A custom set of rules to check for a project</description>
+
+    <!-- Exclude the Composer Vendor directory. -->
+    <exclude-pattern>vendor/*</exclude-pattern>
+
+    <!-- Exclude the Node Modules directory. -->
+    <exclude-pattern>node_modules/*</exclude-pattern>
+
+    <!-- Exclude downloaded files for tests. -->
+    <exclude-pattern>tests/src</exclude-pattern>
+
+    <rule ref="WordPress" />
+
+    <!-- Include the WordPress-Extra standard. -->
+    <rule ref="WordPress-Extra">
+        <exclude name="WordPress.WhiteSpace.ControlStructureSpacing" />
+        <exclude name="WordPress.Security.EscapeOutput" />
+    </rule>
+
+    <!-- Let's also check that everything is properly documented. -->
+    <rule ref="WordPress-Docs" />
+
+    <!-- Add in some extra rules from other standards. -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter" />
+    <rule ref="Generic.Commenting.Todo" />
+
+    <!-- Do not require docblocks for unit tests -->
+    <rule ref="Squiz.Commenting.FunctionComment.Missing">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.FileComment.Missing">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.ClassComment.Missing">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.ClassComment.SpacingAfter">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Commenting.DocComment.Empty">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Commenting.DocComment.MissingShort">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.VariableComment.Missing">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.FunctionCommentThrowTag.Missing">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+
+    <!-- Ignore snake case errors -->
+    <rule ref="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase">
+        <exclude-pattern>src/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
+        <exclude-pattern>src/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+
+    <rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase">
+        <exclude-pattern>src/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
+        <exclude-pattern>src/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+
+    <!-- Spaces for function declarations -->
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1" />
+            <property name="requiredSpacesAfterOpen" value="0" />
+            <property name="requiredSpacesBeforeClose" value="0" />
+        </properties>
+    </rule>
+
+    <!-- Ignore file name casing for tests and main class -->
+    <rule ref="WordPress.Files.FileName">
+        <exclude-pattern>tests/*</exclude-pattern>
+        <exclude-pattern>src/class-shortcode-tree.php</exclude-pattern>
+    </rule>
+
+    <!-- Allow multiple classes for class implementation -->
+    <rule ref="Generic.Files.OneObjectStructurePerFile">
+        <exclude-pattern>src/class-shortcode-tree.php</exclude-pattern>
+    </rule>
+
+    <!-- Check for PHP cross-version compatibility. -->
+    <!--
+	To enable this, the PHPCompatibilityWP standard needs to be installed.
+	See the readme for installation instructions: https://github.com/PHPCompatibility/PHPCompatibilityWP
+	For more information, also see: https://github.com/PHPCompatibility/PHPCompatibility
+    -->
+    <config name="minimum_supported_wp_version" value="4.9" />
+    <config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />
+</ruleset>
