@@ -24,14 +24,11 @@ matrix:
   allow_failures:
     - php: nightly
 
-before_install:
-- composer remove --dev phpunit/phpunit
-- composer require php-coveralls/php-coveralls
-
 install:
   - composer install
 
 script:
+- php ./vendor/bin/phpcs src tests
 - mkdir -p ./tests/logs
 - phpunit --coverage-clover ./tests/logs/clover.xml
 

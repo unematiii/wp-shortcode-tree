@@ -57,16 +57,19 @@
     </rule>
 
     <!-- Ignore snake case errors -->
+    <rule ref="WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase">
+        <exclude-pattern>src/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
     <rule ref="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase">
         <exclude-pattern>src/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
-    <rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
+    <rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase">
         <exclude-pattern>src/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
-
-    <rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase">
+    <rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
         <exclude-pattern>src/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
