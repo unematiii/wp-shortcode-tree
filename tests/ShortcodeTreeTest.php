@@ -35,7 +35,7 @@ class ShortcodeTreeTest extends \PHPUnit\Framework\TestCase
         foreach($documents as $doc) {
             $doc->attr('name', 'My ' . $doc->attr('name'));
         }
-        
+
         $this->assertEquals($expected_content, $content);
     }
 
@@ -49,7 +49,7 @@ class ShortcodeTreeTest extends \PHPUnit\Framework\TestCase
 
         $content = ShortcodeTree::fromString ( $post_content );
 
-        $this->assertEquals($expected_content, (string)$content);   
+        $this->assertEquals($expected_content, (string)$content);
     }
 
     public function test_keyOnlyAttributesShouldWork() {
@@ -60,7 +60,7 @@ class ShortcodeTreeTest extends \PHPUnit\Framework\TestCase
 
         $content = ShortcodeTree::fromString ( $post_content );
 
-        $this->assertEquals($expected_content, (string)$content);   
+        $this->assertEquals($expected_content, (string)$content);
     }
 
     public function test_constructorShouldBeAbleToSetRoot() {

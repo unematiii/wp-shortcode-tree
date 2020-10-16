@@ -95,10 +95,10 @@ class ShortcodeTest extends \PHPUnit\Framework\TestCase
                 [/another_inner]
             [/outer]
         ');
-        
+
         $this->assertCount(1, $tags);
         $tag = $tags[0];
-        
+
         $first = $tag->findNthOccurrence ('this_is_it', 0);
         $this->assertEquals('1', $first->atts()['n']);
 

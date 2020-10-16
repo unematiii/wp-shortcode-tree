@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/unematiii/wp-shortcode-tree.svg)](https://travis-ci.org/unematiii/wp-shortcode-tree)
 [![Coverage Status](https://coveralls.io/repos/github/unematiii/wp-shortcode-tree/badge.svg)](https://coveralls.io/github/unematiii/wp-shortcode-tree)
 
-Parses (nested) shortcodes into tree hierarcy. Find nodes, manipulate and re-serialize into string. Convenient for processing VisualComposer generated content in the backend.
+Parses (nested) shortcodes into tree hierarchy. Find nodes, manipulate and re-serialize into string. Convenient for processing VisualComposer generated content in the backend.
 
 ### Basic Usage
 
@@ -38,6 +38,7 @@ foreach($documents as $doc)
 ```
 
 Serialize and save:
+
 ```php
 // Write content
 wp_update_post ( array (
