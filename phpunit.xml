@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
-  bootstrap="tests/bootstrap.php"
-  cacheResult="false"
-  colors="true"
-  backupGlobals="true"
-  >
-  <php>
-      <ini name="error_reporting" value="E_ALL"/>
-      <ini name="intl.error_level" value="0"/>
-      <ini name="display_errors" value="On"/>
-  </php>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd" bootstrap="tests/bootstrap.php" cacheResult="false" colors="true" backupGlobals="true">
+    <php>
+        <ini name="error_reporting" value="E_ALL" />
+        <ini name="intl.error_level" value="0" />
+        <ini name="display_errors" value="On" />
+    </php>
 
-  <coverage>
-    <include>
-      <directory suffix=".php">./src</directory>
-    </include>
-    <exclude>
-      <file>./src/bootstrap.php</file>
-    </exclude>
-    <report>
-      <html outputDirectory="tests/logs/coverage"></html>
-    </report>
-  </coverage>
-  <testsuites>
-    <testsuite name="Unit Tests">
-      <directory suffix="Test.php">./tests/</directory>
-    </testsuite>
-  </testsuites>
+    <coverage>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+        <exclude>
+            <file>./src/bootstrap.php</file>
+        </exclude>
+        <report>
+            <html outputDirectory="tests/logs/coverage"></html>
+        </report>
+    </coverage>
+    <testsuites>
+        <testsuite name="Unit Tests">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

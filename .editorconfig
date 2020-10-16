@@ -6,11 +6,15 @@ insert_final_newline     = true
 end_of_line              = lf
 charset                  = utf-8
 tab_width                = 4
+max_line_length          = 120
 
-[*.{html,inc,php,xml}]
+[*.{html,xml}]
 indent_size              = 4
 indent_style             = space
-max_line_length          = 120
+
+[*.{inc,php}]
+indent_size              = 4
+indent_style             = tabs
 
 [*.{sh,yml}]
 indent_size              = 2
@@ -18,7 +22,6 @@ indent_style             = space
 
 [*.md]
 indent_style             = space
-max_line_length          = 120
 
 [*.patch]
 trim_trailing_whitespace = false
