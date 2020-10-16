@@ -1,3 +1,4 @@
 /vendor/
 /tests/src/
 /tests/logs/
+.phpunit.result.cache
