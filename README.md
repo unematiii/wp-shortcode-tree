@@ -52,6 +52,21 @@ wp_update_post(
 );
 ```
 
+### Custom (unregistered shortcodes)
+
+If the content you want to parse contains unregistered shortcodes, pass them as an additional array to `(ShortcodeTree|Shortcode)::fromString` method:
+
+```
+[registered_shortcode some_att="0"]
+    [unregistered_shortcode some_att="0"]
+[/registered_shortcode]
+```
+
+```php
+$content = \WordPress\ShortcodeTree::fromString( $page->post_content, array( 'unregistered_shortcode' ) );
+$custom  = $content->findAll( 'unregistered_shortcode' );
+```
+
 ## Development
 
 ### Requirements
