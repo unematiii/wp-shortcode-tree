@@ -65,6 +65,26 @@ class ShortcodeTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( $expected_string, (string) $tags[1]->shortcodes()[0] );
 	}
 
+	public function test_fromStringWithCustomShortcodesShouldWork() {
+		add_shortcode( 'bazbar_foo', null );
+		add_shortcode( 'lorem_ipsum', null );
+		$string_in = '
+            [bazbar_foo]
+                [lorem_ipsum dolor="sit amet"]
+					[custom attr="value"]
+                [/lorem_ipsum]
+            [/bazbar_foo]';
+
+		$tags = Shortcode::fromString( $string_in, array( 'custom' ) );
+
+		$this->assertCount( 1, $tags );
+		$this->assertEquals( 'bazbar_foo', $tags[0]->getName() );
+		$this->assertCount( 1, $tags[0]->shortcodes() );
+
+		$expected_string = '[lorem_ipsum dolor="sit amet"][custom attr="value"][/lorem_ipsum]';
+		$this->assertEquals( $expected_string, (string) $tags[0]->shortcodes()[0] );
+	}
+
 	public function test_setNameShouldWork() {
 		$tag = new Shortcode( 'before' );
 		$tag->setClosed( true );

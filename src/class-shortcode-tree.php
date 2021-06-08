@@ -262,10 +262,15 @@ class Shortcode {
 	 * For single rooted hierarchy, array only contains one root node.
 	 *
 	 * @param string $shortcode Input string to parse.
+	 * @param array  $tagnames Custom (unregistered) tag names.
 	 * @return array
 	 */
-	public static function fromString($shortcode) {
-		$pattern = get_shortcode_regex();
+	public static function fromString($shortcode, $tagnames = array()) {
+		global $shortcode_tags;
+
+		$tags = array_merge( array_keys( $shortcode_tags ), $tagnames );
+
+		$pattern = get_shortcode_regex( $tags );
 		$nodes   = array();
 
 		if (preg_match_all( "/$pattern/s", $shortcode, $matches )) {
@@ -286,7 +291,7 @@ class Shortcode {
 					$siblings = array();
 					if (strlen( $matches [5] [ $node_index ] )) {
 						if (0 === strpos( trim( $matches [5] [ $node_index ] ), '[' )) {
-							$siblings = self::fromString( $matches [5] [ $node_index ] );
+							$siblings = self::fromString( $matches [5] [ $node_index ], $tagnames );
 						} else {
 							$node->setContent( $matches [5] [ $node_index ] );
 						}
@@ -426,11 +431,12 @@ class ShortcodeTree {
 	 * For non single rooted hierarchy, a dummy parent node is constructed.
 	 *
 	 * @param string $shortcode Shortcode(s) to parse.
+	 * @param array  $tagnames Custom (unregistered) tag names.
 	 * @return \WordPress\ShortCodeTree
 	 */
-	public static function fromString($shortcode) {
+	public static function fromString($shortcode, $tagnames = array()) {
 		$tree  = new ShortcodeTree();
-		$nodes = Shortcode::fromString( $shortcode );
+		$nodes = Shortcode::fromString( $shortcode, $tagnames );
 
 		if (count( $nodes )) {
 			if (count( $nodes ) > 1) {

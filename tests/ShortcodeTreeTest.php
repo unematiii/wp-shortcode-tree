@@ -62,6 +62,17 @@ class ShortcodeTreeTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( $expected_content, (string) $content );
 	}
 
+	public function test_unregisteredShortcodesShouldWork() {
+		add_shortcode( 'custom_sc', null );
+
+		$post_content     = '[custom_sc][unregistered_shortcode][custom_sc][/unregistered_shortcode][/custom_sc]';
+		$expected_content = '[custom_sc][unregistered_shortcode][custom_sc][/unregistered_shortcode][/custom_sc]';
+
+		$content = ShortcodeTree::fromString( $post_content, array( 'unregistered_shortcode' ) );
+
+		$this->assertEquals( $expected_content, (string) $content );
+	}
+
 	public function test_constructorShouldBeAbleToSetRoot() {
 		add_shortcode( 'outer', null );
 
